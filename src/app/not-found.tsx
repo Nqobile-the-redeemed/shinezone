@@ -14,7 +14,7 @@ export default function NotFound() {
         <Image src='/images/error/404-dark.svg' alt='404' className='hidden dark:block' width={472} height={152} />
 
         <p className='mt-10 mb-6 text-base text-gray-700 sm:text-lg dark:text-gray-400'>
-          We can’t seem to find the page you are looking for!
+          We cannot find the Shinezone page you are looking for.
         </p>
 
         <Link
@@ -26,7 +26,7 @@ export default function NotFound() {
       </div>
       {/* <!-- Footer --> */}
       <p className='absolute bottom-6 left-1/2 -translate-x-1/2 text-center text-sm text-gray-500 dark:text-gray-400'>
-        &copy; {new Date().getFullYear()} - TailAdmin
+        &copy; {new Date().getFullYear()} - Shinezone
       </p>
     </div>
   )
