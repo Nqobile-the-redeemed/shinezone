@@ -2,7 +2,15 @@
 
 import type { ReactNode } from 'react'
 import { useMemo } from 'react'
-import { bookingServiceOptions, hazardOptions, requestTypes, timeSlots, wasteOptions } from '@/data/shinezone'
+import {
+  bookingServiceOptionSlugs,
+  bookingServiceOptions,
+  bookingServiceQuestions,
+  hazardOptions,
+  requestTypes,
+  timeSlots,
+  wasteOptions
+} from '@/data/shinezone'
 import CaptchaField from '@/components/shinezone/CaptchaField'
 
 const inputClass =
@@ -45,8 +53,16 @@ function StepSection({
   )
 }
 
-export default function BookingRequestForm() {
+export default function BookingRequestForm({
+  selectedServiceSlug,
+  selectedRequest
+}: {
+  selectedServiceSlug?: string
+  selectedRequest?: string
+}) {
   const today = useMemo(() => new Date().toISOString().slice(0, 10), [])
+  const selectedQuestions = selectedServiceSlug ? bookingServiceQuestions[selectedServiceSlug] : undefined
+  const serviceSlugByOption = useMemo(() => new Map<string, string>(bookingServiceOptionSlugs), [])
 
   return (
     <form className='rounded-lg border border-[#d6e2ea] bg-white px-4 py-2 shadow-sm sm:px-6'>
@@ -68,7 +84,12 @@ export default function BookingRequestForm() {
               key={type}
               className='flex items-center gap-3 rounded-md border border-[#d6e2ea] p-3 text-sm font-semibold text-[#102033]'
             >
-              <input type='radio' name='requestType' className='h-4 w-4 accent-[#00A652]' />
+              <input
+                type='radio'
+                name='requestType'
+                className='h-4 w-4 accent-[#00A652]'
+                defaultChecked={selectedRequest === 'site-survey' ? type === 'Site survey' : false}
+              />
               {type}
             </label>
           ))}
@@ -86,11 +107,27 @@ export default function BookingRequestForm() {
               key={option}
               className='flex items-center gap-3 rounded-md border border-[#d6e2ea] p-3 text-sm text-[#102033]'
             >
-              <input type='checkbox' className='h-4 w-4 rounded accent-[#00A652]' />
+              <input
+                type='checkbox'
+                name='serviceType'
+                value={option}
+                className='h-4 w-4 rounded accent-[#00A652]'
+                defaultChecked={selectedServiceSlug ? serviceSlugByOption.get(option) === selectedServiceSlug : false}
+              />
               {option}
             </label>
           ))}
         </div>
+        {selectedQuestions ? (
+          <div className='mt-6 rounded-md border border-[#b9e7ce] bg-[#f0fbf5] p-4'>
+            <h3 className='font-bold text-[#08274D]'>Helpful details for this service</h3>
+            <ul className='mt-3 grid gap-2 text-sm leading-6 text-[#284154] md:grid-cols-2'>
+              {selectedQuestions.map(question => (
+                <li key={question}>{question}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </StepSection>
 
       <StepSection number='3' title='Client details'>

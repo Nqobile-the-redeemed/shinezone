@@ -7,7 +7,19 @@ export const metadata: Metadata = {
   description: 'Request a quotation, site survey, scheduled clean or emergency specialist cleaning attendance.'
 }
 
-export default function BookPage() {
+function getStringParam(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value
+}
+
+export default async function BookPage({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>
+}) {
+  const resolvedSearchParams = await searchParams
+  const selectedServiceSlug = getStringParam(resolvedSearchParams?.service)
+  const selectedRequest = getStringParam(resolvedSearchParams?.request)
+
   return (
     <SiteShell>
       <PageIntro
@@ -17,7 +29,7 @@ export default function BookPage() {
       />
       <section className='bg-[#f6f9fb]'>
         <div className='mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8'>
-          <BookingRequestForm />
+          <BookingRequestForm selectedServiceSlug={selectedServiceSlug} selectedRequest={selectedRequest} />
         </div>
       </section>
     </SiteShell>

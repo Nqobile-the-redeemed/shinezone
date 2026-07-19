@@ -3,7 +3,7 @@ import { PageIntro, SiteShell } from '@/components/shinezone/SiteShell'
 
 export const metadata: Metadata = {
   title: 'Cookies | Shinezone',
-  description: 'Cookie notice placeholder for Shinezone.'
+  description: 'Cookie notice status for Shinezone.'
 }
 
 export default function CookiesPage() {
@@ -12,7 +12,7 @@ export default function CookiesPage() {
       <PageIntro
         eyebrow='Cookies'
         title='Cookie notice'
-        text='[VERIFY BEFORE PUBLICATION] Add the approved cookie list, consent mechanism and analytics settings before enabling non-essential cookies.'
+        text='The approved cookie list, consent mechanism and analytics settings are pending formal approval before non-essential cookies are enabled.'
       />
     </SiteShell>
   )

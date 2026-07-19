@@ -39,11 +39,11 @@ export type AssurancePage = {
 const draftMeta = {
   status: 'draft' as PolicyStatus,
   version: '0.1 draft',
-  owner: '[INSERT POLICY OWNER]',
-  approvedBy: '[INSERT APPROVER]',
-  effectiveDate: '[INSERT EFFECTIVE DATE]',
-  lastReviewed: '[INSERT REVIEW DATE]',
-  nextReview: '[INSERT REVIEW DATE]',
+  owner: 'Shinezone management',
+  approvedBy: 'Pending formal approval',
+  effectiveDate: 'To be confirmed',
+  lastReviewed: 'To be confirmed',
+  nextReview: 'To be confirmed',
   publicDownloadEnabled: false,
   controlledEvidenceAvailable: true
 }
@@ -669,10 +669,10 @@ export const policies: PolicyDocument[] = [
       {
         title: 'Targets and monitoring',
         items: [
-          '[INSERT SINGLE-USE PLASTIC TARGET]',
-          '[INSERT ROUTE-MILEAGE TARGET]',
-          '[INSERT ENVIRONMENTAL TRAINING TARGET]',
-          '[INSERT DILUTION-COMPLIANCE TARGET]',
+          'Single-use plastic reduction target to be approved',
+          'Route-mileage reduction target to be approved',
+          'Environmental training target to be approved',
+          'Dilution-compliance target to be approved',
           'Track product use, dilution exceptions, waste records, spill incidents, mileage, equipment replacement and staff training'
         ]
       }

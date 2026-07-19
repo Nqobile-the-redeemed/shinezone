@@ -1,9 +1,33 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getService, services } from '@/data/shinezone'
-import { CTASection, PageIntro, SiteShell } from '@/components/shinezone/SiteShell'
+import { SiteShell } from '@/components/shinezone/SiteShell'
+import {
+  ServiceBreadcrumbs,
+  ServiceClientChecklist,
+  ServiceClientPropertyGrid,
+  ServiceCompetencePanel,
+  ServiceControls,
+  ServiceEnvironmentalSection,
+  ServiceEquipmentPanel,
+  ServiceFAQAccordion,
+  ServiceGallery,
+  ServiceHero,
+  ServiceLimitations,
+  ServiceOptions,
+  ServiceOutcomeGrid,
+  ServiceOverview,
+  ServicePageNavigation,
+  ServicePricingFactors,
+  ServiceProcessTimeline,
+  ServiceQualitySection,
+  ServiceQuickFacts,
+  ServiceQuoteCTA,
+  ServiceRelatedContent,
+  ServiceScenarioGrid,
+  ServiceScopeGroups
+} from '@/components/shinezone/services/ServiceSections'
+import { brand } from '@/data/shinezone'
+import { categoryLabels, getService, services } from '@/data/services'
 
 export function generateStaticParams() {
   return services.map(service => ({ slug: service.slug }))
@@ -18,22 +42,98 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return {
-    title: `${service.title} | Shinezone`,
-    description: service.summary
+    title: service.seo.title,
+    description: service.seo.description,
+    keywords: service.seo.keywords,
+    alternates: {
+      canonical: `/services/${service.slug}`
+    },
+    openGraph: {
+      title: service.seo.title,
+      description: service.seo.description,
+      type: 'website',
+      images: [
+        {
+          url: service.image,
+          alt: service.imageAlt
+        }
+      ]
+    }
   }
 }
 
-function ListBlock({ title, items }: { title: string; items: string[] }) {
-  return (
-    <section className='rounded-lg border border-[#d6e2ea] bg-white p-5'>
-      <h2 className='text-lg font-bold text-[#08274D]'>{title}</h2>
-      <ul className='mt-4 grid gap-2 text-sm leading-6 text-[#4a5b6d]'>
-        {items.map(item => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-    </section>
-  )
+function StructuredData({ service }: { service: NonNullable<ReturnType<typeof getService>> }) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  const serviceUrl = `${baseUrl}/services/${service.slug}`
+  const primaryCategory = service.category[0]
+
+  const schema = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+        { '@type': 'ListItem', position: 2, name: 'Services', item: `${baseUrl}/services` },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: categoryLabels[primaryCategory],
+          item: `${baseUrl}/services?category=${primaryCategory}`
+        },
+        { '@type': 'ListItem', position: 4, name: service.title, item: serviceUrl }
+      ]
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: brand.legalName,
+      alternateName: brand.name,
+      url: baseUrl,
+      telephone: brand.phone,
+      email: brand.email,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '7 Bowles Way',
+        addressLocality: 'Dunstable',
+        postalCode: 'LU6 3LX',
+        addressCountry: 'GB'
+      }
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: service.title,
+      serviceType: service.schemaServiceType,
+      description: service.seo.description,
+      provider: {
+        '@type': 'Organization',
+        name: brand.legalName
+      },
+      url: serviceUrl,
+      image: `${baseUrl}${service.image}`
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: service.faqs.map(faq => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer
+        }
+      }))
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: service.seo.title,
+      description: service.seo.description,
+      url: serviceUrl
+    }
+  ]
+
+  return <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 }
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -46,55 +146,30 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
 
   return (
     <SiteShell>
-      <PageIntro eyebrow='Service' title={service.title} text={service.summary} />
-      <section className='bg-[#f6f9fb]'>
-        <div className='mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8'>
-          <div className='relative min-h-[420px] overflow-hidden rounded-lg'>
-            <Image
-              src={service.image}
-              alt=''
-              fill
-              sizes='(min-width: 1024px) 45vw, 100vw'
-              className='object-cover'
-              priority
-            />
-          </div>
-          <div className='grid gap-4'>
-            <ListBlock title='Suitable client types' items={service.suitableFor} />
-            <ListBlock title='Typical property types' items={service.propertyTypes} />
-          </div>
-        </div>
-      </section>
-      <section className='bg-white'>
-        <div className='mx-auto grid max-w-7xl gap-5 px-4 py-14 sm:px-6 md:grid-cols-2 lg:px-8'>
-          <ListBlock title='Scope of work' items={service.scope} />
-          <ListBlock title='Possible exclusions' items={service.exclusions} />
-          <ListBlock title='Operational process' items={service.process} />
-          <ListBlock title='Health and safety controls' items={service.controls} />
-          <ListBlock title='Equipment and PPE' items={service.equipment} />
-          <ListBlock title='Quality assurance' items={service.qa} />
-        </div>
-      </section>
-      <section className='bg-[#eef5f8]'>
-        <div className='mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8'>
-          <h2 className='text-3xl font-bold text-[#08274D]'>Frequently asked questions</h2>
-          <div className='mt-6 grid gap-4'>
-            {service.faqs.map(faq => (
-              <article key={faq.question} className='rounded-lg border border-[#d6e2ea] bg-white p-5'>
-                <h3 className='font-bold text-[#08274D]'>{faq.question}</h3>
-                <p className='mt-2 text-sm leading-6 text-[#4a5b6d]'>{faq.answer}</p>
-              </article>
-            ))}
-          </div>
-          <Link
-            href='/book'
-            className='mt-8 inline-flex rounded-md bg-[#00A652] px-5 py-3 font-semibold text-white hover:bg-[#008f47]'
-          >
-            Request this service
-          </Link>
-        </div>
-      </section>
-      <CTASection />
+      <StructuredData service={service} />
+      <ServiceBreadcrumbs service={service} />
+      <ServiceHero service={service} />
+      <ServiceQuickFacts service={service} />
+      <ServicePageNavigation />
+      <ServiceOverview service={service} />
+      <ServiceClientPropertyGrid service={service} />
+      <ServiceScenarioGrid scenarios={service.commonScenarios} />
+      <ServiceOutcomeGrid outcomes={service.outcomes} />
+      <ServiceScopeGroups groups={service.scopeGroups} />
+      <ServiceOptions service={service} />
+      <ServiceProcessTimeline steps={service.process} />
+      <ServiceClientChecklist service={service} />
+      <ServiceControls service={service} />
+      <ServiceCompetencePanel service={service} />
+      <ServiceEquipmentPanel service={service} />
+      <ServiceQualitySection service={service} />
+      <ServiceEnvironmentalSection service={service} />
+      <ServicePricingFactors service={service} />
+      <ServiceLimitations limitations={service.exclusions} />
+      <ServiceGallery service={service} />
+      <ServiceRelatedContent service={service} />
+      <ServiceFAQAccordion faqs={service.faqs} />
+      <ServiceQuoteCTA service={service} />
     </SiteShell>
   )
 }

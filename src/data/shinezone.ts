@@ -1,19 +1,5 @@
-export type Service = {
-  slug: string
-  title: string
-  shortTitle: string
-  summary: string
-  image: string
-  suitableFor: string[]
-  propertyTypes: string[]
-  scope: string[]
-  exclusions: string[]
-  process: string[]
-  controls: string[]
-  equipment: string[]
-  qa: string[]
-  faqs: { question: string; answer: string }[]
-}
+export type { Service } from './services'
+export { getService, services } from './services'
 
 export type Sector = {
   title: string
@@ -66,281 +52,10 @@ export const mainNav = [
 export const capabilityStrip = [
   'Commercial and specialist cleaning',
   'Risk-assessed working methods',
-  'Trained and vetted workforce',
+  'Competence matched to task risk',
   'Environmentally responsible practices',
-  'Scheduled nationwide requests',
-  'Rapid response in verified areas'
-]
-
-export const services: Service[] = [
-  {
-    slug: 'commercial-cleaning',
-    title: 'Commercial Cleaning',
-    shortTitle: 'Commercial',
-    summary:
-      'Routine and one-off cleaning for offices, retail spaces, communal workplaces and managed commercial premises.',
-    image: imagePaths.commercial,
-    suitableFor: ['Offices', 'Retail premises', 'Community premises', 'Property managers'],
-    propertyTypes: ['Workspaces', 'Washrooms', 'Kitchens', 'High-touch common areas'],
-    scope: ['High-touch surface cleaning', 'Washrooms and kitchens', 'Floors and fixtures', 'Scheduled cleaning plans'],
-    exclusions: ['Specialist waste removal unless quoted', 'Unsafe access areas without a risk review'],
-    process: ['Confirm scope', 'Assess access and risk', 'Agree schedule', 'Deploy team', 'Inspect and sign off'],
-    controls: ['COSHH controls', 'Colour-coded equipment', 'Wet-floor controls', 'Site security procedures'],
-    equipment: ['Microfibre systems', 'Mops and floor tools', 'Approved chemicals', 'PPE'],
-    qa: ['Supervisor checks', 'Digital checklist', 'Client sign-off', 'Issue rectification record'],
-    faqs: [
-      {
-        question: 'Can Shinezone clean outside normal office hours?',
-        answer:
-          'Yes, out-of-hours work can be requested and is confirmed once access, security and staffing are agreed.'
-      }
-    ]
-  },
-  {
-    slug: 'communal-block-cleaning',
-    title: 'Communal Block Cleaning',
-    shortTitle: 'Communal Blocks',
-    summary: 'Cleaning plans for entrances, corridors, stairwells, lifts and shared facilities in managed blocks.',
-    image: imagePaths.clinical,
-    suitableFor: ['Housing associations', 'Local authorities', 'Block managers', 'Landlords'],
-    propertyTypes: ['Low-rise blocks', 'High-rise blocks', 'Shared accommodation', 'Temporary accommodation'],
-    scope: ['Corridors and stairs', 'Entrance areas', 'Lifts and touchpoints', 'Bin areas where instructed'],
-    exclusions: ['Resident belongings', 'Restricted plant rooms unless authorised'],
-    process: ['Review building schedule', 'Notify residents where required', 'Clean common areas', 'Record findings'],
-    controls: ['Resident-sensitive working', 'Manual handling', 'Wet-floor signage', 'Site access controls'],
-    equipment: ['Colour-coded cloths', 'Vacuum systems', 'Floor tools', 'Waste sacks'],
-    qa: ['Inspection rotation', 'Photographic evidence where agreed', 'Non-conformance log', 'Monthly review'],
-    faqs: [
-      {
-        question: 'Can cleaning-day notices be provided?',
-        answer: 'Yes, the operational process can include resident notices for agreed communal cleaning schedules.'
-      }
-    ]
-  },
-  {
-    slug: 'end-of-tenancy-cleaning',
-    title: 'End-of-Tenancy Cleaning',
-    shortTitle: 'End of Tenancy',
-    summary: 'Turnaround cleaning for vacant properties, shared accommodation and managed lettings.',
-    image: imagePaths.carpet,
-    suitableFor: ['Estate agents', 'Letting agents', 'Housing providers', 'Landlords'],
-    propertyTypes: ['Studios', 'One- to five-bedroom homes', 'Shared accommodation', 'Temporary accommodation'],
-    scope: ['Kitchens and appliances', 'Bathrooms', 'Internal windows', 'Carpets and floors', 'Condition photos'],
-    exclusions: ['Major repairs', 'Hazardous waste not declared before attendance'],
-    process: [
-      'Collect condition details',
-      'Estimate crew and duration',
-      'Attend site',
-      'Inspect and certify completion'
-    ],
-    controls: ['Dynamic risk assessment', 'PPE', 'COSHH', 'Waste screening'],
-    equipment: ['Vacuum and floor care', 'Appliance cleaning tools', 'Steam or extraction equipment where quoted'],
-    qa: ['Before-and-after photos with permission', 'Completion certificate', 'Supervisor inspection'],
-    faqs: [
-      {
-        question: 'Why does the booking form ask about bedrooms and hazards?',
-        answer: 'Crew size and duration can vary heavily by property condition, hazards, waste and access constraints.'
-      }
-    ]
-  },
-  {
-    slug: 'post-eviction-cleaning',
-    title: 'Post-Eviction Cleaning',
-    shortTitle: 'Post-Eviction',
-    summary: 'Controlled property cleaning after eviction or abandonment, with risk screening before attendance.',
-    image: imagePaths.pressureDetail,
-    suitableFor: ['Housing providers', 'Property managers', 'Landlords', 'Letting agents'],
-    propertyTypes: ['Flats', 'Houses', 'Temporary accommodation', 'Shared buildings'],
-    scope: ['Initial condition review', 'Deep cleaning', 'Waste assessment', 'Hazard escalation'],
-    exclusions: ['Unknown substances outside approved procedure', 'Structural repairs'],
-    process: ['Screen hazards', 'Plan PPE and waste route', 'Secure site', 'Clean and document outcome'],
-    controls: ['Sharps awareness', 'Biohazard escalation', 'Lone-worker controls', 'Controlled access'],
-    equipment: ['PPE', 'Sharps containers where required', 'Heavy-duty cleaning tools', 'Waste containment'],
-    qa: ['Risk record', 'Photographic evidence', 'Client sign-off', 'Rectification workflow'],
-    faqs: [
-      {
-        question: 'Can Shinezone handle unknown substances?',
-        answer: 'Unknown substances are escalated and handled only through approved safe procedures.'
-      }
-    ]
-  },
-  {
-    slug: 'temporary-accommodation-cleaning',
-    title: 'Temporary Accommodation Cleaning',
-    shortTitle: 'Temporary Accommodation',
-    summary: 'Respectful cleaning for temporary accommodation, including occupied and shared environments.',
-    image: imagePaths.clinical,
-    suitableFor: ['Councils', 'Temporary accommodation providers', 'Housing teams'],
-    propertyTypes: ['Hostels', 'Shared accommodation', 'Self-contained units', 'Newly acquired properties'],
-    scope: ['Shared kitchens and bathrooms', 'Corridors', 'Vacant unit cleans', 'Resident-sensitive cleaning'],
-    exclusions: ['Regulated care activity', 'Personal possessions unless instructed by authorised staff'],
-    process: [
-      'Confirm occupancy',
-      'Agree access and resident communication',
-      'Clean with minimal disruption',
-      'Report issues'
-    ],
-    controls: ['Safeguarding awareness', 'Privacy and dignity', 'Site security', 'Vulnerable-resident awareness'],
-    equipment: ['Colour-coded equipment', 'PPE', 'Waste bags', 'Approved cleaning products'],
-    qa: ['Client reporting', 'Supervisor checks', 'Escalation notes', 'Service review'],
-    faqs: [
-      {
-        question: 'Does Shinezone provide care services?',
-        answer: 'No. Shinezone provides property-cleaning services and does not provide regulated care.'
-      }
-    ]
-  },
-  {
-    slug: 'supported-living-cleaning',
-    title: 'Supported Living Environment Cleaning',
-    shortTitle: 'Supported Living',
-    summary:
-      'Property-cleaning services for supported living environments, working respectfully around residents and support teams.',
-    image: imagePaths.upholstery,
-    suitableFor: ['Supported living providers', 'Care organisations', 'Property managers'],
-    propertyTypes: ['Communal lounges', 'Shared kitchens', 'Bathrooms', 'Resident-adjacent common areas'],
-    scope: ['Communal areas', 'Hygiene-sensitive spaces', 'Touchpoints', 'Escalation of property concerns'],
-    exclusions: ['Regulated personal care', 'Resident medical details collection'],
-    process: ['Coordinate with support team', 'Respect privacy', 'Clean agreed areas', 'Escalate safety concerns'],
-    controls: ['Safeguarding awareness', 'DBS checks where required', 'Respectful communication', 'Confidentiality'],
-    equipment: ['PPE', 'Colour-coded equipment', 'Approved disinfectants', 'Waste containment'],
-    qa: ['Supervisor review', 'Client-visible notes', 'Issue escalation', 'Complaint tracking'],
-    faqs: [
-      {
-        question: 'How is resident privacy protected?',
-        answer:
-          'The workflow avoids unnecessary personal data and focuses on property, access and risk information only.'
-      }
-    ]
-  },
-  {
-    slug: 'biohazard-bodily-fluid-cleaning',
-    title: 'Biohazard and Bodily-Fluid Cleaning',
-    shortTitle: 'Biohazard',
-    summary: 'Controlled cleaning for blood, bodily fluids, contamination, odour and disinfection requirements.',
-    image: imagePaths.spray,
-    suitableFor: ['Housing providers', 'Property managers', 'Businesses', 'Emergency requesters'],
-    propertyTypes: ['Communal spaces', 'Bathrooms', 'Accommodation units', 'Commercial areas'],
-    scope: ['Area isolation', 'Contaminated surface cleaning', 'Disinfection', 'Incident documentation'],
-    exclusions: ['Unsupported certification claims', 'Unidentified substances outside safe procedure'],
-    process: ['Triage incident', 'Assess site risk', 'Deploy PPE and containment', 'Clean and document completion'],
-    controls: ['PPE', 'COSHH', 'Controlled waste handling', 'Decontamination procedure'],
-    equipment: ['Disposable PPE', 'Disinfectants', 'Containment materials', 'Waste bags'],
-    qa: ['Incident record', 'Completion evidence', 'Client sign-off', 'Recall procedure'],
-    faqs: [
-      {
-        question: 'Is attendance automatically confirmed?',
-        answer: 'No. Specialist attendance is confirmed after triage, risk review and operational acceptance.'
-      }
-    ]
-  },
-  {
-    slug: 'sharps-drug-paraphernalia-clearance',
-    title: 'Sharps and Drug-Paraphernalia Clearance',
-    shortTitle: 'Sharps Clearance',
-    summary: 'Safe visual hazard assessment, isolation and clearance workflow for sharps and drug paraphernalia.',
-    image: imagePaths.pressureDetail,
-    suitableFor: ['Housing providers', 'Councils', 'Property managers', 'Commercial premises'],
-    propertyTypes: ['Communal blocks', 'External areas', 'Vacant properties', 'Bathrooms and bin areas'],
-    scope: ['Visual assessment', 'Area isolation', 'Sharps collection', 'Escalation for suspected substances'],
-    exclusions: ['Handling unidentified substances outside approved procedures'],
-    process: ['Screen hazard', 'Isolate area', 'Collect using safe method', 'Record and transfer waste appropriately'],
-    controls: ['Anti-needle gloves', 'Sharps containers', 'PPE', 'Escalation procedure'],
-    equipment: ['Sharps bins', 'Anti-needle gloves', 'Tongs', 'PPE'],
-    qa: ['Hazard record', 'Waste documentation where applicable', 'Completion check'],
-    faqs: [
-      {
-        question: 'What happens if illegal substances are suspected?',
-        answer: 'The team escalates the issue and does not handle unidentified substances outside approved procedures.'
-      }
-    ]
-  },
-  {
-    slug: 'emergency-specialist-cleaning',
-    title: 'Emergency Specialist Cleaning',
-    shortTitle: 'Emergency',
-    summary: 'Urgent cleaning request triage for confirmed response areas, without unsupported response-time promises.',
-    image: imagePaths.hero,
-    suitableFor: ['Existing clients', 'Housing teams', 'Property managers', 'Commercial clients'],
-    propertyTypes: ['Communal spaces', 'Temporary accommodation', 'Commercial premises', 'Vacant units'],
-    scope: ['Request reception', 'Triage', 'Crew dispatch where accepted', 'Arrival and completion records'],
-    exclusions: ['Medical, criminal or immediate-danger response', 'Guaranteed attendance without acceptance'],
-    process: ['Receive request', 'Triage risk', 'Confirm acceptance', 'Dispatch team', 'Record operational timestamps'],
-    controls: ['Emergency escalation wording', 'Site risk assessment', 'PPE', 'Operational timestamp log'],
-    equipment: ['Role-specific PPE', 'Cleaning kits', 'Waste containment', 'Communication devices'],
-    qa: ['Arrival record', 'Completion evidence', 'Recall and rectification tracking'],
-    faqs: [
-      {
-        question: 'Should I use this form for immediate danger?',
-        answer:
-          'No. For immediate danger, criminal activity or a medical emergency, contact the appropriate emergency service.'
-      }
-    ]
-  },
-  {
-    slug: 'window-cleaning',
-    title: 'Window Cleaning',
-    shortTitle: 'Windows',
-    summary: 'Internal and external window cleaning below and above two metres, subject to risk assessment.',
-    image: imagePaths.clinical,
-    suitableFor: ['Housing providers', 'Block managers', 'Offices', 'Commercial premises'],
-    propertyTypes: ['Internal glazing', 'Low-level external windows', 'Communal doors', 'Frames and sills'],
-    scope: ['Internal windows', 'External windows', 'Frames and sills', 'Damage reporting'],
-    exclusions: ['Unsafe high access without suitable method', 'Abseiling unless separately arranged'],
-    process: ['Assess height and access', 'Segregate area', 'Clean glazing and frames', 'Report defects'],
-    controls: ['Working-at-height review', 'Area segregation', 'Equipment checks', 'Dynamic risk assessment'],
-    equipment: ['Reach-and-wash or pole systems', 'Squeegees', 'PPE', 'Warning signage'],
-    qa: ['Visual inspection', 'Damage notes', 'Client sign-off'],
-    faqs: [
-      {
-        question: 'Can extension poles be used?',
-        answer: 'Yes, where the site risk assessment confirms the method is suitable.'
-      }
-    ]
-  },
-  {
-    slug: 'carpet-floor-care',
-    title: 'Carpet and Floor Care',
-    shortTitle: 'Carpets & Floors',
-    summary: 'Carpet extraction, floor scrubbing, buffing, strip-and-reseal and periodic floor treatments.',
-    image: imagePaths.carpet,
-    suitableFor: ['Property managers', 'Offices', 'Letting agents', 'Housing providers'],
-    propertyTypes: ['Carpeted rooms', 'Hard floors', 'Communal corridors', 'Commercial areas'],
-    scope: ['Carpet extraction', 'Spot cleaning', 'Scrubbing', 'Buffing', 'Strip and reseal'],
-    exclusions: ['Damaged flooring repair', 'Stain removal guarantees where damage is permanent'],
-    process: ['Assess surface', 'Choose method', 'Prepare area', 'Clean and inspect finish'],
-    controls: ['COSHH', 'Slip controls', 'Drying advice', 'Equipment safety checks'],
-    equipment: ['Extraction machines', 'Scrubbers', 'Buffers', 'Floor chemicals'],
-    qa: ['Surface inspection', 'Before-and-after evidence', 'Client approval'],
-    faqs: [
-      {
-        question: 'Can all stains be removed?',
-        answer: 'Some stains or surface damage can be permanent; this is assessed before quotation where possible.'
-      }
-    ]
-  },
-  {
-    slug: 'periodic-specialist-cleaning',
-    title: 'Periodic and Specialist Cleaning',
-    shortTitle: 'Specialist',
-    summary:
-      'Planned specialist cleaning including wall washing, graffiti removal, builders cleans and high-pressure cleaning.',
-    image: imagePaths.pressure,
-    suitableFor: ['Commercial clients', 'Developers', 'Housing providers', 'Property managers'],
-    propertyTypes: ['External areas', 'Refurbished spaces', 'Communal areas', 'Commercial buildings'],
-    scope: ['Wall washing', 'Graffiti removal', 'High-pressure cleaning', 'Builders or initial cleans'],
-    exclusions: ['Surface repairs', 'Specialist access not agreed in advance'],
-    process: ['Define output', 'Assess surface and risk', 'Agree method', 'Clean and inspect'],
-    controls: ['Surface suitability review', 'COSHH', 'Water controls', 'Public-area segregation'],
-    equipment: ['Pressure cleaning equipment', 'Specialist chemicals', 'PPE', 'Signage'],
-    qa: ['Output inspection', 'Client sign-off', 'Corrective action where needed'],
-    faqs: [
-      {
-        question: 'Can Shinezone handle builders cleans?',
-        answer: 'Yes, builders and initial cleans can be requested and scoped based on site condition and access.'
-      }
-    ]
-  }
+  'Scheduled regional requests',
+  'Urgent requests triaged before acceptance'
 ]
 
 export const sectors: Sector[] = [
@@ -434,7 +149,7 @@ export const socialValueCommitments = [
       'Entry-level cleaning opportunities',
       'Paid practical training',
       'Supervisor progression routes',
-      '[VERIFY BEFORE PUBLICATION] Work placements where practical'
+      'Work placements to be published only after approval'
     ]
   },
   {
@@ -444,14 +159,14 @@ export const socialValueCommitments = [
       'Reusable microfibre systems',
       'Responsible waste disposal',
       'Route optimisation',
-      '[VERIFY BEFORE PUBLICATION] Carbon-reduction initiatives'
+      'Carbon-reduction initiatives to be published only after approval'
     ]
   },
   {
     title: 'Community Value',
     items: [
-      '[VERIFY BEFORE PUBLICATION] Charity partnership',
-      '[VERIFY BEFORE PUBLICATION] Free charitable-facility deep cleans',
+      'Community partnerships to be published only after approval',
+      'Charitable-facility support to be published only after approval',
       'Community cleaning initiatives',
       'Donation of staff time or cleaning materials where approved'
     ]
@@ -460,21 +175,21 @@ export const socialValueCommitments = [
 
 export const caseStudies = [
   {
-    title: '[INSERT REAL CASE STUDY] End-of-tenancy restoration',
+    title: 'Evidence example pending approval: end-of-tenancy restoration',
     sector: 'Lettings or housing provider',
     property: 'Vacant residential property',
     challenge: 'Property condition, appliances, flooring and completion deadline to be verified.',
     outcome: 'Add verified timeframe, team composition, risks controlled and client feedback before publication.'
   },
   {
-    title: '[INSERT REAL CASE STUDY] Supported living communal clean',
+    title: 'Evidence example pending approval: supported living communal clean',
     sector: 'Supported living provider',
     property: 'Occupied communal environment',
     challenge: 'Resident sensitivity, access windows and safeguarding controls to be verified.',
     outcome: 'Add approved photographs and client sign-off evidence where consent exists.'
   },
   {
-    title: '[INSERT REAL CASE STUDY] Specialist or biohazard clean',
+    title: 'Evidence example pending approval: specialist or biohazard clean',
     sector: 'Housing, commercial or property management',
     property: 'Incident-specific site',
     challenge: 'Hazards, PPE, waste route and incident documentation to be verified.',
@@ -508,6 +223,103 @@ export const bookingServiceOptions = [
   'Builders or initial clean',
   'Other specialist clean'
 ]
+
+export const bookingServiceOptionSlugs = [
+  ['Commercial cleaning', 'commercial-cleaning'],
+  ['Communal block cleaning', 'communal-block-cleaning'],
+  ['End of tenancy', 'end-of-tenancy-cleaning'],
+  ['Post eviction', 'post-eviction-cleaning'],
+  ['Biohazard or bodily fluid', 'biohazard-bodily-fluid-cleaning'],
+  ['Sharps or drug paraphernalia', 'sharps-drug-paraphernalia-clearance'],
+  ['Supported living environment', 'supported-living-cleaning'],
+  ['Temporary accommodation', 'temporary-accommodation-cleaning'],
+  ['Window cleaning', 'window-cleaning'],
+  ['Carpet cleaning', 'carpet-floor-care'],
+  ['Floor strip and reseal', 'carpet-floor-care'],
+  ['Graffiti removal', 'periodic-specialist-cleaning'],
+  ['Wall washing', 'periodic-specialist-cleaning'],
+  ['Builders or initial clean', 'periodic-specialist-cleaning']
+] as const
+
+export const bookingServiceQuestions: Record<string, string[]> = {
+  'end-of-tenancy-cleaning': [
+    'Bedrooms and approximate property size',
+    'Property condition and photographs where available',
+    'Vacant date and required completion deadline',
+    'Appliances, carpets, internal windows and waste requirements',
+    'Known hazards including sharps, bodily fluids or suspected substances'
+  ],
+  'communal-block-cleaning': [
+    'Number of blocks, floors, entrances and lifts',
+    'Preferred cleaning frequency',
+    'Resident notices or displayed schedule requirements',
+    'Bin areas, hoppers and water-supply limitations',
+    'Site representative and reporting expectations'
+  ],
+  'supported-living-cleaning': [
+    'Occupancy and whether areas are communal or private',
+    'Support-team contact and preferred working hours',
+    'Safeguarding or disruption considerations',
+    'Confidential access arrangements',
+    'Areas that should not be entered or moved'
+  ],
+  'temporary-accommodation-cleaning': [
+    'Occupied, vacant or partly occupied status',
+    'Shared facilities, vacant-room turnaround and communal areas',
+    'Staff or tenancy-team liaison requirements',
+    'Privacy, security and resident disruption considerations',
+    'Known hazards, waste or unauthorised-occupancy observations'
+  ],
+  'biohazard-bodily-fluid-cleaning': [
+    'Type of contamination and approximate affected area',
+    'When the issue was identified',
+    'Occupancy, immediate danger and emergency-service involvement',
+    'Whether sharps or suspected substances are present',
+    'Photographs where safe and lawful'
+  ],
+  'sharps-drug-paraphernalia-clearance': [
+    'Estimated number and location of sharps',
+    'Whether items are visible or may be concealed',
+    'Public or resident access to the area',
+    'Suspected substances or police/client involvement',
+    'Whether a follow-on clean is required'
+  ],
+  'window-cleaning': [
+    'Internal or external glazing',
+    'Approximate number of windows and working height',
+    'Access, parking and ground conditions',
+    'Pole-system suitability or water access',
+    'Damaged glazing, restrictors or public-route risks'
+  ],
+  'carpet-floor-care': [
+    'Surface type and approximate area',
+    'Stains, odours or permanent-damage concerns',
+    'Furniture movement restrictions',
+    'Drying-time or access requirements',
+    'Whether this is one-off or planned maintenance'
+  ],
+  'periodic-specialist-cleaning': [
+    'Required task such as wall washing, pressure cleaning, graffiti removal or builders clean',
+    'Surface type, access and water availability',
+    'Public-area segregation needs',
+    'Handover deadline or programme stage',
+    'Known surface damage or compatibility concerns'
+  ],
+  'post-eviction-cleaning': [
+    'Authority to instruct cleaning and disposal',
+    'Belongings, furniture or bulky-waste instructions',
+    'Sharps, suspected substances, pest evidence or bodily fluids',
+    'Site-security handover and lock-up requirements',
+    'Photographs and completion evidence required'
+  ],
+  'emergency-specialist-cleaning': [
+    'Immediate-danger status and emergency-service involvement',
+    'Incident type, location and affected area',
+    'Occupancy and access arrangements',
+    'Known hazards and photographs where safe',
+    'Urgent contact available for triage decisions'
+  ]
+}
 
 export const hazardOptions = [
   'Vulnerable residents present',
@@ -551,7 +363,3 @@ export const sensitiveClaims = [
   'Waste carrier registration enabled',
   'Insurance details enabled'
 ]
-
-export function getService(slug: string) {
-  return services.find(service => service.slug === slug)
-}

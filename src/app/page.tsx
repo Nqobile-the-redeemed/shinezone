@@ -100,7 +100,7 @@ export default function Home() {
                 <div className='relative aspect-[16/9]'>
                   <Image
                     src={service.image}
-                    alt=''
+                    alt={service.imageAlt}
                     fill
                     sizes='(min-width: 1024px) 33vw, 100vw'
                     className='object-cover transition duration-300 group-hover:scale-105'

@@ -19,7 +19,7 @@ export function SiteHeader() {
       <div className='bg-[#08274D] text-white'>
         <div className='mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8'>
           <p className='flex items-center gap-2'>
-            <Image src='/images/shinezone/favicon.svg' alt='' width={22} height={20} className='h-5 w-5' />
+            <Image src='/images/shinezone/favicon.svg' alt='' width={22} height={20} className='h-5 w-5 bg-white px-0.5 rounded' />
             Need an urgent specialist clean? Contact our emergency response team.
           </p>
           <div className='flex flex-wrap items-center gap-3'>
