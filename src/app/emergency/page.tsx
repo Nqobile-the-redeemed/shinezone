@@ -37,6 +37,10 @@ export default function EmergencyPage() {
                 <dd>{brand.serviceArea}</dd>
               </div>
               <div>
+                <dt className='font-bold text-[#08274D]'>Emergency-service hours</dt>
+                <dd>{brand.emergencyHours}</dd>
+              </div>
+              <div>
                 <dt className='font-bold text-[#08274D]'>Existing contract or client reference</dt>
                 <dd>Collected in the booking form for faster triage.</dd>
               </div>

@@ -2,6 +2,7 @@
 import Checkbox from '@/components/form/input/Checkbox'
 import Input from '@/components/form/input/InputField'
 import Label from '@/components/form/Label'
+import CaptchaField from '@/components/shinezone/CaptchaField'
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from '@/icons'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -127,6 +128,9 @@ export default function SignUpForm() {
                   </p>
                 </div>
                 {/* <!-- Button --> */}
+                <div>
+                  <CaptchaField action='template-signup' />
+                </div>
                 <div>
                   <button className='bg-brand-500 shadow-theme-xs hover:bg-brand-600 flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-medium text-white transition'>
                     Sign Up

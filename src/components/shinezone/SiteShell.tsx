@@ -18,7 +18,10 @@ export function SiteHeader() {
     <header className='sticky top-0 z-50 border-b border-white/20 bg-white/95 backdrop-blur'>
       <div className='bg-[#08274D] text-white'>
         <div className='mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8'>
-          <p>Need an urgent specialist clean? Contact our emergency response team.</p>
+          <p className='flex items-center gap-2'>
+            <Image src='/images/shinezone/favicon.svg' alt='' width={22} height={20} className='h-5 w-5' />
+            Need an urgent specialist clean? Contact our emergency response team.
+          </p>
           <div className='flex flex-wrap items-center gap-3'>
             <span>{brand.emergencyPhone}</span>
             <Link
@@ -78,6 +81,16 @@ export function SiteFooter() {
             height={48}
             className='h-auto w-[200px] rounded-md bg-white p-3'
           />
+          <div className='mt-4 flex items-center gap-2 text-sm font-semibold text-white/85'>
+            <Image
+              src='/images/shinezone/favicon.svg'
+              alt=''
+              width={24}
+              height={22}
+              className='h-6 w-6 rounded bg-white p-1'
+            />
+            Quality, safety and assurance-led cleaning
+          </div>
           <p className='mt-5 max-w-xl text-sm leading-6 text-white/80'>
             Commercial and specialist cleaning for property professionals, housing providers, care organisations and
             businesses. Attendance and response times are confirmed after operational triage.

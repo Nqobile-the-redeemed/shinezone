@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import CaptchaField from '@/components/shinezone/CaptchaField'
 
 export const metadata: Metadata = {
   title: 'Admin Login | Shinezone'
@@ -29,6 +30,7 @@ export default function AdminLoginPage() {
               type='password'
             />
           </label>
+          <CaptchaField action='admin-login' />
           <button
             type='button'
             className='rounded-md bg-[#00A652] px-5 py-3 font-semibold text-white hover:bg-[#008f47]'

@@ -29,24 +29,29 @@ export const brand = {
   companyNumber: '16825930',
   representative: 'Dzulani Ndou',
   address: '7 Bowles Way, Dunstable, LU6 3LX',
-  phone: '[INSERT GENERAL PHONE]',
-  emergencyPhone: '[INSERT EMERGENCY PHONE]',
-  email: '[INSERT GENERAL EMAIL]',
-  quotationsEmail: '[INSERT QUOTATIONS EMAIL]',
-  serviceArea: '[INSERT VERIFIED RESPONSE AREA]',
-  normalHours: '[INSERT NORMAL OPERATING HOURS]',
-  emergencyHours: '[INSERT EMERGENCY SERVICE HOURS]'
+  phone: '+44 7761 659901',
+  emergencyPhone: '+44 7761 659901',
+  email: 'admin@shinezone.co.uk',
+  quotationsEmail: 'dzulani@shinezone.co.uk',
+  serviceArea: 'Bedfordshire, Hertfordshire, Buckinghamshire, North London and surrounding counties',
+  normalHours: '8:00am to 6:00pm',
+  emergencyHours: '24 hours for pre-booked urgent work, including weekends and holidays'
 }
 
 export const imagePaths = {
-  hero: '/images/shinezone/puroclean-of-fort-worth--dc38HdQR1M-unsplash.jpg',
-  commercial: '/images/shinezone/towfiqu-barbhuiya--9gPKrsbGmc-unsplash.jpg',
+  favicon: '/images/shinezone/favicon.svg',
+  hero: '/images/shinezone/new-images/pexels-tima-miroshnichenko-6195129.jpg',
+  commercial: '/images/shinezone/new-images/ashwini-chaudhary-monty--4KzDiyZjgw-unsplash.jpg',
   upholstery: '/images/shinezone/giorgio-trovato-5TXz228u4eo-unsplash.jpg',
-  clinical: '/images/shinezone/toon-lambrechts-0FTI9ceTUOc-unsplash.jpg',
-  carpet: '/images/shinezone/california-steam-dry-carpet-cleaning-Ddzir2TCR2g-unsplash.jpg',
+  clinical: '/images/shinezone/new-images/pexels-michelangelo-buonarroti-4176042.jpg',
+  carpet: '/images/shinezone/new-images/california-steam-dry-carpet-cleaning-Ddzir2TCR2g-unsplash (1).jpg',
   pressure: '/images/shinezone/the-graphic-space-X93z_JSoHo8-unsplash.jpg',
   pressureDetail: '/images/shinezone/the-graphic-space-kLZs4yoR0uU-unsplash.jpg',
-  spray: '/images/shinezone/jeshoots-com-__ZMnefoI3k-unsplash.jpg'
+  spray: '/images/shinezone/jeshoots-com-__ZMnefoI3k-unsplash.jpg',
+  specialistPpe: '/images/shinezone/new-images/pexels-michelangelo-buonarroti-4176042.jpg',
+  team: '/images/shinezone/new-images/pexels-tima-miroshnichenko-6195129.jpg',
+  assurance: '/images/shinezone/new-images/ashwini-chaudhary-monty--4KzDiyZjgw-unsplash.jpg',
+  documents: '/images/shinezone/towfiqu-barbhuiya--9gPKrsbGmc-unsplash.jpg'
 }
 
 export const mainNav = [

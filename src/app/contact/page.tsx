@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { brand } from '@/data/shinezone'
+import ContactForm from '@/components/shinezone/ContactForm'
 import { CTASection, PageIntro, SiteShell } from '@/components/shinezone/SiteShell'
 
 export const metadata: Metadata = {
@@ -27,7 +28,7 @@ export default function ContactPage() {
       <PageIntro
         eyebrow='Contact'
         title='Speak to Shinezone about your property'
-        text='Use the booking route for structured quotations and site surveys, or contact Shinezone directly once verified phone and email details are added.'
+        text='Use the booking route for structured quotations and site surveys, or contact Shinezone directly using the details below.'
       />
       <section className='bg-[#f6f9fb]'>
         <div className='mx-auto grid max-w-7xl gap-6 px-4 py-14 sm:px-6 lg:grid-cols-2 lg:px-8'>
@@ -58,6 +59,10 @@ export default function ContactPage() {
                 <dt className='font-bold text-[#08274D]'>Operating hours</dt>
                 <dd>{brand.normalHours}</dd>
               </div>
+              <div>
+                <dt className='font-bold text-[#08274D]'>Emergency hours</dt>
+                <dd>{brand.emergencyHours}</dd>
+              </div>
             </dl>
           </article>
           <article className='rounded-lg border border-[#d6e2ea] bg-white p-6'>
@@ -78,6 +83,11 @@ export default function ContactPage() {
               ))}
             </div>
           </article>
+        </div>
+      </section>
+      <section className='bg-[#f6f9fb]'>
+        <div className='mx-auto max-w-3xl px-4 pb-14 sm:px-6 lg:px-8'>
+          <ContactForm />
         </div>
       </section>
       <section className='bg-white'>

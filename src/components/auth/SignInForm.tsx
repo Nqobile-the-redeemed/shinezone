@@ -2,6 +2,7 @@
 import Checkbox from '@/components/form/input/Checkbox'
 import Input from '@/components/form/input/InputField'
 import Label from '@/components/form/Label'
+import CaptchaField from '@/components/shinezone/CaptchaField'
 import Button from '@/components/ui/button/Button'
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from '@/icons'
 import Link from 'next/link'
@@ -113,6 +114,9 @@ export default function SignInForm() {
                   >
                     Forgot password?
                   </Link>
+                </div>
+                <div>
+                  <CaptchaField action='template-signin' />
                 </div>
                 <div>
                   <Button className='w-full' size='sm'>

@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 import { useMemo } from 'react'
 import { bookingServiceOptions, hazardOptions, requestTypes, timeSlots, wasteOptions } from '@/data/shinezone'
+import CaptchaField from '@/components/shinezone/CaptchaField'
 
 const inputClass =
   'w-full rounded-md border border-[#cbd6df] bg-white px-3 py-2.5 text-sm text-[#102033] outline-none focus:border-[#00A652] focus:ring-2 focus:ring-[#00A652]/20'
@@ -343,6 +344,9 @@ export default function BookingRequestForm() {
             <input type='checkbox' className='mt-1 h-4 w-4 rounded accent-[#00A652]' />
             Optional: I consent to receive occasional Shinezone service updates and marketing.
           </label>
+        </div>
+        <div className='mt-5'>
+          <CaptchaField action='booking-request' />
         </div>
         <button
           type='button'

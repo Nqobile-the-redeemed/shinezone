@@ -17,10 +17,15 @@ export const metadata: Metadata = {
   },
   description:
     'Commercial, communal, end-of-tenancy and specialist cleaning services for property professionals, housing providers, care organisations and businesses.',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/images/shinezone/favicon.svg'
+  },
   openGraph: {
     title: 'Shinezone',
     description: 'Commercial and specialist cleaning services for managed property environments.',
-    images: ['/images/shinezone/puroclean-of-fort-worth--dc38HdQR1M-unsplash.jpg']
+    images: ['/images/shinezone/new-images/pexels-tima-miroshnichenko-6195129.jpg']
   }
 }
 

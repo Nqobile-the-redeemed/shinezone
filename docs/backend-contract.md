@@ -8,6 +8,8 @@ This is the recommended Phase 2 backend shape for the shared API at `\\wsl.local
 - `GET /api/services/{slug}`
 - `GET /api/sectors`
 - `GET /api/case-studies`
+- `GET /api/policies`
+- `GET /api/policies/{slug}`
 - `GET /api/service-areas/lookup?postcode=LU1`
 - `GET /api/availability/slots?service=...&postcode=...&date=2026-07-17`
 - `POST /api/bookings`
@@ -15,6 +17,7 @@ This is the recommended Phase 2 backend shape for the shared API at `\\wsl.local
 - `GET /api/bookings/reference/{reference}`
 - `POST /api/contact-enquiries`
 - `POST /api/emergency-requests`
+- `POST /api/assurance/document-requests`
 
 ## Protected Admin Endpoints
 
@@ -45,6 +48,13 @@ This is the recommended Phase 2 backend shape for the shared API at `\\wsl.local
 - `GET /api/admin/case-studies`
 - `POST /api/admin/case-studies`
 - `PATCH /api/admin/case-studies/{caseStudy}`
+- `GET /api/admin/policies`
+- `POST /api/admin/policies`
+- `PATCH /api/admin/policies/{policy}`
+- `GET /api/admin/assurance/document-requests`
+- `PATCH /api/admin/assurance/document-requests/{request}`
+- `POST /api/admin/assurance/document-requests/{request}/status`
+- `POST /api/admin/assurance/document-requests/{request}/secure-links`
 - `GET /api/admin/settings`
 - `PATCH /api/admin/settings`
 - `GET /api/admin/audit-logs`
@@ -68,6 +78,11 @@ This is the recommended Phase 2 backend shape for the shared API at `\\wsl.local
 - `booking_rectifications`
 - `case_studies`
 - `contact_enquiries`
+- `policies`
+- `policy_sections`
+- `assurance_document_requests`
+- `assurance_request_status_history`
+- `secure_document_links`
 - `admin_users`
 - `admin_roles`
 - `admin_settings`
@@ -129,6 +144,10 @@ Priorities:
 - `TWILIO_AUTH_TOKEN`
 - `TWILIO_FROM_NUMBER`
 - `SMS_NOTIFICATIONS_ENABLED=false`
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY`
+- `TURNSTILE_SECRET_KEY`
+
+All public form endpoints must verify the captcha token server-side before accepting the submission.
 
 ## Claim-Control Settings
 
