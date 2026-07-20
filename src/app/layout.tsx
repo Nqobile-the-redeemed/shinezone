@@ -1,13 +1,8 @@
-import { Outfit } from 'next/font/google'
 import type { Metadata } from 'next'
 import './globals.css'
 
 import { SidebarProvider } from '@/context/SidebarContext'
 import { ThemeProvider } from '@/context/ThemeContext'
-
-const outfit = Outfit({
-  subsets: ['latin']
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
@@ -36,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${outfit.className} dark:bg-gray-900`}>
+      <body className='font-outfit dark:bg-gray-900'>
         <ThemeProvider>
           <SidebarProvider>{children}</SidebarProvider>
         </ThemeProvider>
