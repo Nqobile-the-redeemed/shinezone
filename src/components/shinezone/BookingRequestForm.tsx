@@ -1,7 +1,7 @@
 'use client'
 
-import type { ReactNode } from 'react'
-import { useMemo } from 'react'
+import type { FormEvent, ReactNode } from 'react'
+import { useMemo, useState } from 'react'
 import {
   bookingServiceOptionSlugs,
   bookingServiceOptions,
@@ -16,6 +16,34 @@ import CaptchaField from '@/components/shinezone/CaptchaField'
 const inputClass =
   'w-full rounded-md border border-[#cbd6df] bg-white px-3 py-2.5 text-sm text-[#102033] outline-none focus:border-[#00A652] focus:ring-2 focus:ring-[#00A652]/20'
 const labelClass = 'text-sm font-semibold text-[#08274D]'
+
+const apiBaseUrl = process.env.NEXT_PUBLIC_SHINEZONE_API_URL?.replace(/\/$/, '') || ''
+const bookingsEndpoint = `${apiBaseUrl}${apiBaseUrl.endsWith('/api') ? '' : '/api'}/v1/clients/shinezone/bookings`
+
+const bookingTypeByRequest = new Map([
+  ['Emergency attendance', 'emergency_request'],
+  ['Same-day request', 'service_booking'],
+  ['Scheduled clean', 'service_booking'],
+  ['Recurring cleaning', 'service_booking'],
+  ['Site survey', 'site_visit'],
+  ['Quotation only', 'quote_request']
+])
+
+const contactMethodByLabel = new Map([
+  ['Email', 'email'],
+  ['Telephone', 'phone'],
+  ['Either', 'either']
+])
+
+function stringValue(formData: FormData, name: string) {
+  const value = formData.get(name)
+
+  return typeof value === 'string' && value.trim() ? value.trim() : undefined
+}
+
+function checkedValues(formData: FormData, name: string) {
+  return formData.getAll(name).filter((value): value is string => typeof value === 'string' && value.trim() !== '')
+}
 
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
@@ -63,9 +91,124 @@ export default function BookingRequestForm({
   const today = useMemo(() => new Date().toISOString().slice(0, 10), [])
   const selectedQuestions = selectedServiceSlug ? bookingServiceQuestions[selectedServiceSlug] : undefined
   const serviceSlugByOption = useMemo(() => new Map<string, string>(bookingServiceOptionSlugs), [])
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const [message, setMessage] = useState<string>()
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    const requestType = stringValue(formData, 'requestType') || requestTypes[0]
+    const selectedServices = checkedValues(formData, 'serviceType')
+    const firstService = selectedServices[0]
+    const firstServiceSlug = firstService ? serviceSlugByOption.get(firstService) : selectedServiceSlug
+    const contactName = stringValue(formData, 'contactName') || ''
+    const email = stringValue(formData, 'email') || ''
+    const phone = stringValue(formData, 'telephone') || ''
+    const recaptchaToken = stringValue(formData, 'cf-turnstile-response')
+
+    setStatus('submitting')
+    setMessage(undefined)
+
+    try {
+      const response = await fetch(bookingsEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: contactName,
+          email,
+          phone,
+          booking_type: bookingTypeByRequest.get(requestType) || 'quote_request',
+          service_slug: firstServiceSlug,
+          service_name: firstService,
+          preferred_date: stringValue(formData, 'preferredDate'),
+          alternative_date: stringValue(formData, 'alternativeDate'),
+          preferred_time: stringValue(formData, 'preferredTimeSlot'),
+          alternative_time: stringValue(formData, 'alternativeTimeSlot'),
+          preferred_contact_method:
+            contactMethodByLabel.get(stringValue(formData, 'preferredContactMethod') || '') || 'either',
+          address: {
+            line1: stringValue(formData, 'address1'),
+            line2: stringValue(formData, 'address2'),
+            city: stringValue(formData, 'townCity'),
+            postcode: stringValue(formData, 'postcode'),
+            country: 'United Kingdom'
+          },
+          property_type: stringValue(formData, 'propertyType'),
+          urgency:
+            requestType === 'Emergency attendance'
+              ? 'emergency'
+              : requestType === 'Same-day request'
+                ? 'urgent'
+                : 'standard',
+          notes: stringValue(formData, 'additionalNotes') || stringValue(formData, 'wasteNotes'),
+          recaptcha_token: recaptchaToken,
+          recaptcha_action: 'booking-request',
+          booking: {
+            request_type: requestType,
+            selected_services: selectedServices,
+            organisation_name: stringValue(formData, 'organisationName'),
+            client_sector: stringValue(formData, 'clientSector'),
+            job_title: stringValue(formData, 'jobTitle'),
+            contract_reference: stringValue(formData, 'contractReference'),
+            existing_client: formData.has('existingClient'),
+            purchase_order_required: formData.has('purchaseOrderRequired'),
+            occupancy_status: stringValue(formData, 'occupancyStatus'),
+            bedrooms: stringValue(formData, 'bedrooms'),
+            floors: stringValue(formData, 'floors'),
+            corridors: stringValue(formData, 'corridors'),
+            square_metres: stringValue(formData, 'squareMetres'),
+            lift_availability: stringValue(formData, 'liftAvailability'),
+            parking: stringValue(formData, 'parking'),
+            water_availability: stringValue(formData, 'waterAvailability'),
+            electricity_availability: stringValue(formData, 'electricityAvailability'),
+            site_contact: stringValue(formData, 'siteContact'),
+            access_process: stringValue(formData, 'accessProcess'),
+            alarm_lockup: stringValue(formData, 'alarmLockup'),
+            access_start: stringValue(formData, 'accessStart'),
+            access_end: stringValue(formData, 'accessEnd'),
+            hazards: checkedValues(formData, 'hazards'),
+            waste: {
+              types: checkedValues(formData, 'wasteTypes'),
+              quantity: stringValue(formData, 'wasteQuantity'),
+              quotation_required: formData.has('wasteQuotationRequired'),
+              notes: stringValue(formData, 'wasteNotes')
+            },
+            flexibility: stringValue(formData, 'flexibility'),
+            completion_deadline: stringValue(formData, 'completionDeadline'),
+            out_of_hours_permitted: formData.has('outOfHoursPermitted'),
+            recurring_frequency: stringValue(formData, 'recurringFrequency'),
+            declarations: checkedValues(formData, 'declarations'),
+            marketing_consent: formData.has('marketingConsent')
+          },
+          metadata: {
+            source: 'shinezone-booking-form',
+            selected_service_slug: selectedServiceSlug,
+            selected_request: selectedRequest
+          }
+        })
+      })
+
+      const result = await response.json().catch(() => null)
+
+      if (!response.ok) {
+        throw new Error(result?.message || 'We could not submit the booking request.')
+      }
+
+      setStatus('success')
+      setMessage(result?.message || 'Your booking request has been submitted.')
+      form.reset()
+    } catch (error) {
+      setStatus('error')
+      setMessage(error instanceof Error ? error.message : 'We could not submit the booking request.')
+    }
+  }
 
   return (
-    <form className='rounded-lg border border-[#d6e2ea] bg-white px-4 py-2 shadow-sm sm:px-6'>
+    <form className='rounded-lg border border-[#d6e2ea] bg-white px-4 py-2 shadow-sm sm:px-6' onSubmit={handleSubmit}>
       <div className='border-b border-[#dde7ee] py-5'>
         <p className='rounded-md border-l-4 border-[#00A652] bg-[#f0fbf5] p-4 text-sm leading-6 text-[#284154]'>
           This is a request and confirmation workflow. Submitting this form does not confirm attendance until Shinezone
@@ -87,8 +230,9 @@ export default function BookingRequestForm({
               <input
                 type='radio'
                 name='requestType'
+                value={type}
                 className='h-4 w-4 accent-[#00A652]'
-                defaultChecked={selectedRequest === 'site-survey' ? type === 'Site survey' : false}
+                defaultChecked={selectedRequest === 'site-survey' ? type === 'Site survey' : type === requestTypes[0]}
               />
               {type}
             </label>
@@ -148,16 +292,16 @@ export default function BookingRequestForm({
             </select>
           </Field>
           <Field label='Contact name'>
-            <input className={inputClass} name='contactName' />
+            <input className={inputClass} name='contactName' required minLength={2} />
           </Field>
           <Field label='Job title'>
             <input className={inputClass} name='jobTitle' />
           </Field>
           <Field label='Email'>
-            <input className={inputClass} name='email' type='email' />
+            <input className={inputClass} name='email' type='email' required />
           </Field>
           <Field label='Telephone'>
-            <input className={inputClass} name='telephone' type='tel' />
+            <input className={inputClass} name='telephone' type='tel' required />
           </Field>
           <Field label='Preferred contact method'>
             <select className={inputClass} name='preferredContactMethod'>
@@ -170,11 +314,11 @@ export default function BookingRequestForm({
             <input className={inputClass} name='contractReference' />
           </Field>
           <label className='flex items-center gap-3 text-sm font-semibold text-[#08274D]'>
-            <input type='checkbox' className='h-4 w-4 rounded accent-[#00A652]' />
+            <input type='checkbox' name='existingClient' className='h-4 w-4 rounded accent-[#00A652]' />
             Existing client
           </label>
           <label className='flex items-center gap-3 text-sm font-semibold text-[#08274D]'>
-            <input type='checkbox' className='h-4 w-4 rounded accent-[#00A652]' />
+            <input type='checkbox' name='purchaseOrderRequired' className='h-4 w-4 rounded accent-[#00A652]' />
             Purchase order required
           </label>
         </div>
@@ -273,7 +417,7 @@ export default function BookingRequestForm({
               key={option}
               className='flex items-center gap-3 rounded-md border border-[#d6e2ea] p-3 text-sm text-[#102033]'
             >
-              <input type='checkbox' className='h-4 w-4 rounded accent-[#00A652]' />
+              <input type='checkbox' name='hazards' value={option} className='h-4 w-4 rounded accent-[#00A652]' />
               {option}
             </label>
           ))}
@@ -287,7 +431,7 @@ export default function BookingRequestForm({
               key={option}
               className='flex items-center gap-3 rounded-md border border-[#d6e2ea] p-3 text-sm text-[#102033]'
             >
-              <input type='checkbox' className='h-4 w-4 rounded accent-[#00A652]' />
+              <input type='checkbox' name='wasteTypes' value={option} className='h-4 w-4 rounded accent-[#00A652]' />
               {option}
             </label>
           ))}
@@ -297,7 +441,7 @@ export default function BookingRequestForm({
             <input className={inputClass} name='wasteQuantity' />
           </Field>
           <label className='flex items-center gap-3 text-sm font-semibold text-[#08274D]'>
-            <input type='checkbox' className='h-4 w-4 rounded accent-[#00A652]' />
+            <input type='checkbox' name='wasteQuotationRequired' className='h-4 w-4 rounded accent-[#00A652]' />
             Waste quotation required
           </label>
           <Field label='Waste notes'>
@@ -339,7 +483,7 @@ export default function BookingRequestForm({
             <input className={inputClass} name='completionDeadline' type='date' min={today} />
           </Field>
           <label className='flex items-center gap-3 text-sm font-semibold text-[#08274D]'>
-            <input type='checkbox' className='h-4 w-4 rounded accent-[#00A652]' />
+            <input type='checkbox' name='outOfHoursPermitted' className='h-4 w-4 rounded accent-[#00A652]' />
             Out-of-hours permitted
           </label>
           <Field label='Recurring frequency'>
@@ -373,23 +517,43 @@ export default function BookingRequestForm({
             'I understand submission does not confirm a booking.'
           ].map(item => (
             <label key={item} className='flex items-start gap-3 text-sm font-semibold text-[#08274D]'>
-              <input type='checkbox' className='mt-1 h-4 w-4 rounded accent-[#00A652]' />
+              <input
+                type='checkbox'
+                name='declarations'
+                value={item}
+                className='mt-1 h-4 w-4 rounded accent-[#00A652]'
+              />
               {item}
             </label>
           ))}
           <label className='flex items-start gap-3 text-sm text-[#4a5b6d]'>
-            <input type='checkbox' className='mt-1 h-4 w-4 rounded accent-[#00A652]' />
+            <input type='checkbox' name='marketingConsent' className='mt-1 h-4 w-4 rounded accent-[#00A652]' />
             Optional: I consent to receive occasional Shinezone service updates and marketing.
           </label>
         </div>
         <div className='mt-5'>
+          <Field label='Additional notes'>
+            <textarea className={inputClass} name='additionalNotes' rows={4} />
+          </Field>
+        </div>
+        <div className='mt-5'>
           <CaptchaField action='booking-request' />
         </div>
+        {message ? (
+          <p
+            className={`mt-5 rounded-md p-4 text-sm leading-6 ${
+              status === 'success' ? 'bg-[#f0fbf5] text-[#006c38]' : 'bg-[#fff3f0] text-[#8a2b16]'
+            }`}
+          >
+            {message}
+          </p>
+        ) : null}
         <button
-          type='button'
-          className='mt-6 rounded-md bg-[#00A652] px-6 py-3 font-semibold text-white hover:bg-[#008f47] focus:ring-2 focus:ring-[#00A652] focus:ring-offset-2 focus:outline-none'
+          type='submit'
+          disabled={status === 'submitting'}
+          className='mt-6 rounded-md bg-[#00A652] px-6 py-3 font-semibold text-white hover:bg-[#008f47] focus:ring-2 focus:ring-[#00A652] focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-[#7dcfa4]'
         >
-          Submit Request
+          {status === 'submitting' ? 'Submitting...' : 'Submit Request'}
         </button>
       </StepSection>
     </form>
