@@ -36,6 +36,15 @@ const contactMethodByLabel = new Map([
   ['Either', 'either']
 ])
 
+declare global {
+  interface Window {
+    grecaptcha?: {
+      ready: (callback: () => void) => void
+      execute: (siteKey: string, options: { action: string }) => Promise<string>
+    }
+  }
+}
+
 const requiredDeclarations = [
   'I confirm the information supplied is accurate to the best of my knowledge.',
   'I have authority to request this service or quotation.',
@@ -52,6 +61,10 @@ function stringValue(formData: FormData, name: string) {
 
 function checkedValues(formData: FormData, name: string) {
   return formData.getAll(name).filter((value): value is string => typeof value === 'string' && value.trim() !== '')
+}
+
+function recaptchaAction(action: string) {
+  return action.replace(/[^A-Za-z0-9/_]/g, '_')
 }
 
 function RequiredStar() {
@@ -116,6 +129,27 @@ export default function BookingRequestForm({
   const [validationErrors, setValidationErrors] = useState<string[]>([])
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
 
+  async function createRecaptchaToken(action: string) {
+    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || process.env.NEXT_PUBLIC_SHINEZONE_RECAPTCHA_SITE_KEY
+
+    if (!siteKey) {
+      return undefined
+    }
+
+    if (!window.grecaptcha) {
+      throw new Error('Google reCAPTCHA is still loading. Please try again in a moment.')
+    }
+
+    return new Promise<string>((resolve, reject) => {
+      window.grecaptcha?.ready(() => {
+        window.grecaptcha
+          ?.execute(siteKey, { action: recaptchaAction(action) })
+          .then(resolve)
+          .catch(() => reject(new Error('Google reCAPTCHA verification could not start. Please try again.')))
+      })
+    })
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setValidationErrors([])
@@ -134,7 +168,6 @@ export default function BookingRequestForm({
     const contactName = stringValue(formData, 'contactName') || ''
     const email = stringValue(formData, 'email') || ''
     const phone = stringValue(formData, 'telephone') || ''
-    const recaptchaToken = stringValue(formData, 'cf-turnstile-response')
     const nextValidationErrors: string[] = []
 
     if (!requestType) {
@@ -161,6 +194,8 @@ export default function BookingRequestForm({
     setValidationErrors([])
 
     try {
+      const recaptchaToken = await createRecaptchaToken('booking_request')
+
       const response = await fetch(bookingsEndpoint, {
         method: 'POST',
         headers: {
@@ -195,8 +230,7 @@ export default function BookingRequestForm({
                 : 'standard',
           notes: stringValue(formData, 'additionalNotes') || stringValue(formData, 'wasteNotes'),
           recaptcha_token: recaptchaToken,
-          turnstile_token: recaptchaToken,
-          recaptcha_action: 'booking-request',
+          recaptcha_action: 'booking_request',
           form_started_at: formStartedAt,
           booking: {
             request_type: requestType,
