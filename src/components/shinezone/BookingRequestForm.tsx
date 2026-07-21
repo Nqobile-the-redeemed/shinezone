@@ -91,6 +91,7 @@ export default function BookingRequestForm({
   const today = useMemo(() => new Date().toISOString().slice(0, 10), [])
   const selectedQuestions = selectedServiceSlug ? bookingServiceQuestions[selectedServiceSlug] : undefined
   const serviceSlugByOption = useMemo(() => new Map<string, string>(bookingServiceOptionSlugs), [])
+  const formStartedAt = useMemo(() => Math.floor(Date.now() / 1000), [])
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState<string>()
 
@@ -146,7 +147,9 @@ export default function BookingRequestForm({
                 : 'standard',
           notes: stringValue(formData, 'additionalNotes') || stringValue(formData, 'wasteNotes'),
           recaptcha_token: recaptchaToken,
+          turnstile_token: recaptchaToken,
           recaptcha_action: 'booking-request',
+          form_started_at: formStartedAt,
           booking: {
             request_type: requestType,
             selected_services: selectedServices,
