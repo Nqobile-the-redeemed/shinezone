@@ -19,7 +19,8 @@ const labelClass = 'text-sm font-semibold text-[#08274D]'
 const requiredStarClass = 'text-[#d92d20]'
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_SHINEZONE_API_URL?.replace(/\/$/, '') || ''
-const bookingsEndpoint = `${apiBaseUrl}${apiBaseUrl.endsWith('/api') ? '' : '/api'}/v1/clients/shinezone/bookings`
+const apiV1BaseUrl = apiBaseUrl.endsWith('/v1') ? apiBaseUrl : `${apiBaseUrl}/v1`
+const bookingsEndpoint = `${apiV1BaseUrl}/clients/shinezone/bookings`
 
 const bookingTypeByRequest = new Map([
   ['Emergency attendance', 'emergency_request'],
