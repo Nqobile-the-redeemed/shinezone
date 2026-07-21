@@ -289,7 +289,13 @@ export default function BookingRequestForm({
       form.reset()
     } catch (error) {
       setStatus('error')
-      setMessage(error instanceof Error ? error.message : 'We could not submit the booking request.')
+      const errorMessage = error instanceof Error ? error.message : 'We could not submit the booking request.'
+
+      setMessage(
+        errorMessage === 'Failed to fetch'
+          ? 'Could not reach the booking API. Please check the API URL and that the backend allows shinezone.co.uk in CORS.'
+          : errorMessage
+      )
     }
   }
 
