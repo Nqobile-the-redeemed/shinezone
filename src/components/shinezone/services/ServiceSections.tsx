@@ -108,7 +108,7 @@ export function ServiceHero({ service }: { service: Service }) {
             </Link>
             {isUrgent ? (
               <Link
-                href={`/emergency?service=${service.slug}`}
+                href={`/emergency/request?service=${service.slug}`}
                 className='rounded-md border border-white px-5 py-3 font-semibold text-white hover:bg-white/10 focus:ring-2 focus:ring-white focus:outline-none'
               >
                 Submit an Urgent Request

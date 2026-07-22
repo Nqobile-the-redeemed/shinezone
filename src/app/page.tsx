@@ -55,7 +55,7 @@ export default function Home() {
               Book a Site Survey
             </Link>
             <Link
-              href='/emergency'
+              href='/emergency/request'
               className='rounded-md border border-white px-5 py-3 font-semibold text-white hover:bg-white/10'
             >
               Emergency Cleaning

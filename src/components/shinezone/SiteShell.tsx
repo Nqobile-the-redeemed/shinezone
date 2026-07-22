@@ -19,13 +19,19 @@ export function SiteHeader() {
       <div className='bg-[#08274D] text-white'>
         <div className='mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8'>
           <p className='flex items-center gap-2'>
-            <Image src='/images/shinezone/favicon.svg' alt='' width={22} height={20} className='h-5 w-5 bg-white px-0.5 rounded' />
+            <Image
+              src='/images/shinezone/favicon.svg'
+              alt=''
+              width={22}
+              height={20}
+              className='h-5 w-5 rounded bg-white px-0.5'
+            />
             Need an urgent specialist clean? Contact our emergency response team.
           </p>
           <div className='flex flex-wrap items-center gap-3'>
             <span>{brand.emergencyPhone}</span>
             <Link
-              href='/emergency'
+              href='/emergency/request'
               className='rounded-md bg-[#00A652] px-3 py-1.5 text-sm font-semibold text-white hover:bg-[#008f47] focus:ring-2 focus:ring-white focus:outline-none'
             >
               Request Emergency Attendance
@@ -58,7 +64,7 @@ export function SiteHeader() {
             </Link>
           ))}
           <Link
-            href='/emergency'
+            href='/emergency/request'
             className='rounded-md bg-[#08274D] px-4 py-2 text-white hover:bg-[#061e3b] focus:ring-2 focus:ring-[#00A652] focus:outline-none'
           >
             Emergency Cleaning

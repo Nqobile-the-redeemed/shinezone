@@ -147,7 +147,7 @@ export default async function ServicesPage({
                 Book a Site Survey
               </Link>
               <Link
-                href='/emergency'
+                href='/emergency/request'
                 className='rounded-md border border-[#08274D] px-5 py-3 font-semibold text-[#08274D] hover:bg-[#f6f9fb]'
               >
                 Need urgent assistance?

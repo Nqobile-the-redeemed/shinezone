@@ -46,7 +46,7 @@ export default function EmergencyPage() {
               </div>
             </dl>
             <Link
-              href='/book'
+              href='/emergency/request'
               className='mt-6 inline-flex rounded-md bg-[#00A652] px-5 py-3 font-semibold text-white hover:bg-[#008f47]'
             >
               Request Emergency Attendance
