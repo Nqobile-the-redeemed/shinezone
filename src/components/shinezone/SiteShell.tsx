@@ -157,6 +157,11 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link href='/carbon-management-plan' className='hover:text-white'>
+                Carbon Management Plan
+              </Link>
+            </li>
+            <li>
               <Link href='/accessibility' className='hover:text-white'>
                 Accessibility
               </Link>

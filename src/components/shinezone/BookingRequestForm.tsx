@@ -1,7 +1,7 @@
 'use client'
 
 import type { FormEvent, ReactNode } from 'react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   bookingServiceOptionSlugs,
   bookingServiceOptions,
@@ -124,11 +124,15 @@ export default function BookingRequestForm({
   const today = useMemo(() => new Date().toISOString().slice(0, 10), [])
   const selectedQuestions = selectedServiceSlug ? bookingServiceQuestions[selectedServiceSlug] : undefined
   const serviceSlugByOption = useMemo(() => new Map<string, string>(bookingServiceOptionSlugs), [])
-  const formStartedAt = useMemo(() => Math.floor(Date.now() / 1000), [])
+  const formStartedAtRef = useRef<number | null>(null)
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState<string>()
   const [validationErrors, setValidationErrors] = useState<string[]>([])
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+
+  useEffect(() => {
+    formStartedAtRef.current = Math.floor(Date.now() / 1000)
+  }, [])
 
   async function createRecaptchaToken(action: string) {
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || process.env.NEXT_PUBLIC_SHINEZONE_RECAPTCHA_SITE_KEY
@@ -232,7 +236,7 @@ export default function BookingRequestForm({
           notes: stringValue(formData, 'additionalNotes') || stringValue(formData, 'wasteNotes'),
           recaptcha_token: recaptchaToken,
           recaptcha_action: 'booking_request',
-          form_started_at: formStartedAt,
+          form_started_at: formStartedAtRef.current,
           booking: {
             request_type: requestType,
             selected_services: selectedServices,

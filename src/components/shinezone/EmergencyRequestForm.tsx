@@ -1,7 +1,7 @@
 'use client'
 
 import type { FormEvent, ReactNode } from 'react'
-import { useMemo, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CaptchaField from '@/components/shinezone/CaptchaField'
 
 const inputClass =
@@ -64,10 +64,14 @@ function Field({ label, children, required = false }: { label: string; children:
 }
 
 export default function EmergencyRequestForm({ selectedServiceSlug }: { selectedServiceSlug?: string }) {
-  const formStartedAt = useMemo(() => Math.floor(Date.now() / 1000), [])
+  const formStartedAtRef = useRef<number | null>(null)
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState<string>()
   const [validationErrors, setValidationErrors] = useState<string[]>([])
+
+  useEffect(() => {
+    formStartedAtRef.current = Math.floor(Date.now() / 1000)
+  }, [])
 
   async function createRecaptchaToken(action: string) {
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || process.env.NEXT_PUBLIC_SHINEZONE_RECAPTCHA_SITE_KEY
@@ -148,7 +152,7 @@ export default function EmergencyRequestForm({ selectedServiceSlug }: { selected
           notes: stringValue(formData, 'additionalNotes'),
           recaptcha_token: recaptchaToken,
           recaptcha_action: 'emergency_request',
-          form_started_at: formStartedAt,
+          form_started_at: formStartedAtRef.current,
           booking: {
             request_type: 'Emergency attendance',
             selected_services: ['Emergency Specialist Cleaning'],
