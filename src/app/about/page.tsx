@@ -5,16 +5,16 @@ import { brand } from '@/data/shinezone'
 import { SiteShell } from '@/components/shinezone/SiteShell'
 
 export const metadata: Metadata = {
-  title: 'About Shinezone | Family-Led Commercial and Specialist Cleaning',
+  title: 'About Shinezone | Founder-Led Commercial and Specialist Cleaning',
   description:
-    'Meet the husband-and-wife team behind Shinezone Ltd and learn how their experience in health and social care shapes a safe, respectful and professionally managed cleaning service.',
+    'Meet Knowledge Madzibuko and learn how Shinezone Ltd brings care, responsibility and professional management to commercial and specialist cleaning.',
   alternates: {
     canonical: '/about'
   },
   openGraph: {
-    title: 'About Shinezone | Family-Led Commercial and Specialist Cleaning',
+    title: 'About Shinezone | Founder-Led Commercial and Specialist Cleaning',
     description:
-      'Learn how Shinezone combines family ownership, health and social care experience, and professionally managed cleaning standards.'
+      'Learn how Shinezone combines founder-led accountability, practical service experience and professionally managed cleaning standards.'
   }
 }
 
@@ -26,33 +26,22 @@ const aboutImages = {
   property: '/images/shinezone/new-images/pexels-rdne-4921525.jpg'
 }
 
-const founders = [
+const leadershipProfiles = [
   {
-    name: 'Dzulani Ndou',
-    role: 'Founder and Company Representative',
+    name: 'Knowledge Madzibuko',
+    role: 'Company Representative',
     biography: [
-      'Dzulani brings experience from health and social care environments where safety, dignity, communication and consistent service delivery are fundamental.',
-      'Her background gives Shinezone a practical understanding of supported-living settings, vulnerable residents, frontline teams, families, property teams and service commissioners.',
-      'Within Shinezone, Dzulani focuses on client relationships, service standards, quality oversight, staff conduct and ensuring that the company values are reflected in day-to-day delivery.'
+      'Knowledge represents Shinezone with a practical focus on safe service delivery, clear communication and dependable cleaning standards.',
+      'His background gives Shinezone an understanding of supported-living settings, residential environments, frontline teams, property teams and service commissioners.',
+      'Within Shinezone, Knowledge focuses on client relationships, operational oversight, service standards, staff conduct and making sure the company values are reflected in day-to-day delivery.'
     ],
     details: [
-      ['Background', 'Health and social care'],
-      ['Specialist interest', 'Quality, dignity and client relationships'],
-      ['Responsibilities', 'Client relationships, quality oversight and service development']
-    ]
-  },
-  {
-    name: "Dzulani's husband",
-    role: 'Co-founder and operational partner',
-    biography: [
-      "Dzulani's husband supports Shinezone's operational planning and service delivery, drawing on experience in health and social care and practical service coordination.",
-      'His role focuses on making sure work is organised, teams understand the assignment, equipment and materials are available, site requirements are communicated and operational issues are escalated promptly.',
-      "This background supports Shinezone's emphasis on calm decision-making, responsible staff deployment, respect for clients and residents, and reliable completion of agreed work."
-    ],
-    details: [
-      ['Background', 'Health and social care'],
-      ['Specialist interest', 'Operations and service delivery'],
-      ['Responsibilities', 'Scheduling, mobilisation, workforce coordination and operational oversight']
+      ['Background', 'Service coordination and operational support'],
+      ['Specialist interest', 'Quality, operations and client relationships'],
+      [
+        'Responsibilities',
+        'Client relationships, scheduling, mobilisation, workforce coordination and operational oversight'
+      ]
     ]
   }
 ]
@@ -243,7 +232,7 @@ function TextCard({ title, text }: { title: string; text: string }) {
   )
 }
 
-function FounderProfileCard({ founder }: { founder: (typeof founders)[number] }) {
+function FounderProfileCard({ founder }: { founder: (typeof leadershipProfiles)[number] }) {
   return (
     <article className='rounded-lg border border-[#d6e2ea] bg-white p-6 shadow-sm'>
       <p className='text-sm font-bold text-[#00A652] uppercase'>{founder.role}</p>
@@ -294,15 +283,15 @@ export default function AboutPage() {
           <div>
             <p className='text-sm font-bold text-[#00A652] uppercase'>About Shinezone</p>
             <h1 className='mt-4 text-4xl leading-tight font-bold text-[#08274D] md:text-6xl'>
-              A family-led cleaning company built on care, responsibility and professional service
+              A founder-led cleaning company built on care, responsibility and professional service
             </h1>
             <p className='mt-6 text-lg leading-8 text-[#4a5b6d]'>
-              Shinezone was founded by husband-and-wife team Dzulani Ndou and her husband, bringing together practical
-              experience in health and social care, service management and the day-to-day responsibilities involved in
-              supporting people, maintaining safe environments and delivering dependable services.
+              Shinezone is represented by Knowledge Madzibuko, bringing together practical experience in service
+              coordination, operational planning and the day-to-day responsibilities involved in supporting people,
+              maintaining safe environments and delivering dependable cleaning services.
             </p>
             <p className='mt-4 leading-7 text-[#4a5b6d]'>
-              Their background has shaped a cleaning company that looks beyond appearances. Shinezone focuses on safety,
+              His background has shaped a cleaning company that looks beyond appearances. Shinezone focuses on safety,
               dignity, communication, accountability and the practical needs of the people who live, work in and manage
               each property.
             </p>
@@ -311,7 +300,7 @@ export default function AboutPage() {
                 href='#founders'
                 className='rounded-md bg-[#00A652] px-5 py-3 font-semibold text-white hover:bg-[#008f47]'
               >
-                Meet the Founders
+                Meet Knowledge
               </a>
               <Link
                 href='/book'
@@ -327,7 +316,7 @@ export default function AboutPage() {
               </Link>
             </div>
             <p className='mt-6 rounded-md border-l-4 border-[#00A652] bg-[#f0fbf5] p-4 text-sm font-bold text-[#08274D]'>
-              Family-led. Professionally managed. Focused on safe and dependable service delivery.
+              Founder-led. Professionally managed. Focused on safe and dependable service delivery.
             </p>
           </div>
           <div className='relative min-h-[520px] overflow-hidden rounded-lg'>
@@ -349,15 +338,15 @@ export default function AboutPage() {
             <SectionHeading eyebrow='The Shinezone Story' title='Why we created Shinezone' />
             <div className='mt-6 grid gap-4 leading-7 text-[#4a5b6d]'>
               <p>
-                Dzulani and her husband established Shinezone after recognising that cleaning in commercial, residential
-                and supported environments requires more than completing a list of tasks.
+                Shinezone was developed after recognising that cleaning in commercial, residential and supported
+                environments requires more than completing a list of tasks.
               </p>
               <p>
-                Through their work and business experience in health and social care, they saw how strongly the
-                condition of an environment can affect a person&apos;s comfort, dignity, safety and confidence. They
-                also understood the operational pressures faced by care providers, housing organisations, landlords,
-                property managers and frontline teams when cleaning services are unreliable, poorly communicated or not
-                delivered with appropriate sensitivity.
+                Through practical service experience, Knowledge understands how strongly the condition of an environment
+                can affect a person&apos;s comfort, dignity, safety and confidence. Shinezone also understands the
+                operational pressures faced by care providers, housing organisations, landlords, property managers and
+                frontline teams when cleaning services are unreliable, poorly communicated or not delivered with
+                appropriate sensitivity.
               </p>
               <p>
                 Shinezone was created to provide a more accountable service: one where work is properly planned, staff
@@ -386,12 +375,12 @@ export default function AboutPage() {
       <section id='founders' className='bg-white'>
         <div className='mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8'>
           <SectionHeading
-            eyebrow='Meet the Founders'
-            title='Meet the husband-and-wife team behind Shinezone'
-            text='Specific names, years, previous employers, qualifications and founder photographs should be added only after they are confirmed and approved.'
+            eyebrow='Meet the Representative'
+            title='Meet Knowledge Madzibuko'
+            text='Knowledge is the public representative for Shinezone and the named contact for company accountability, service standards and client relationships.'
           />
-          <div className='mt-8 grid gap-6 lg:grid-cols-2'>
-            {founders.map(founder => (
+          <div className='mt-8 grid max-w-3xl gap-6'>
+            {leadershipProfiles.map(founder => (
               <FounderProfileCard key={founder.name} founder={founder} />
             ))}
           </div>
@@ -507,7 +496,7 @@ export default function AboutPage() {
             <SectionHeading
               eyebrow='Operations'
               title='Built from practical service-management experience'
-              text='Before developing Shinezone, Dzulani and her husband gained practical experience of the responsibilities involved in running and supporting service-based operations.'
+              text='Shinezone is built on practical experience of the responsibilities involved in running and supporting service-based operations.'
             />
             <p className='mt-5 leading-7 text-[#4a5b6d]'>
               This experience included coordinating people, responding to client needs, maintaining service standards,
@@ -541,8 +530,8 @@ export default function AboutPage() {
         <div className='mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8'>
           <SectionHeading
             eyebrow='Professional Management'
-            title='Family-led does not mean informally managed'
-            text="Shinezone is founded by a husband-and-wife team, but the company's services are intended to be governed through clear roles, documented controls and professional accountability."
+            title='Founder-led does not mean informally managed'
+            text="Shinezone's services are intended to be governed through clear roles, documented controls and professional accountability."
           />
           <div className='mt-8 grid gap-4 lg:grid-cols-6'>
             {managementRoles.map(([role, text]) => (
@@ -598,7 +587,7 @@ export default function AboutPage() {
                   'Expand only where capacity exists',
                   'Avoid promising coverage or response levels that cannot be evidenced.'
                 ],
-                ['Maintain founder oversight', 'Keep the family-led accountability while building management depth.']
+                ['Maintain founder oversight', 'Keep founder-led accountability while building management depth.']
               ].map(([title, text]) => (
                 <TextCard key={title} title={title} text={text} />
               ))}
@@ -642,8 +631,8 @@ export default function AboutPage() {
             </h2>
             <p className='mt-5 leading-7 text-white/85'>
               Shinezone exists because professional cleaning should combine practical skill with respect, responsibility
-              and clear communication. The founders&apos; health and social care experience informs how the company
-              thinks about safe environments, professional conduct and the importance of doing what has been agreed.
+              and clear communication. Knowledge&apos;s service experience informs how the company thinks about safe
+              environments, professional conduct and the importance of doing what has been agreed.
             </p>
           </div>
           <div className='rounded-lg bg-white/10 p-6'>
@@ -699,7 +688,7 @@ export default function AboutPage() {
               href='/contact'
               className='rounded-md border border-[#08274D] px-5 py-3 font-semibold text-[#08274D] hover:bg-white'
             >
-              Speak to the Founders
+              Speak to Shinezone
             </Link>
           </div>
         </div>
